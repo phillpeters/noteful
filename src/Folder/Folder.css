@@ -1,0 +1,15 @@
+.Folder {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  text-decoration: none;
+  text-align: center;
+  color: black;
+  border: 2px solid black;
+}
+
+.active {
+  background-color: chartreuse;
+}

@@ -1,0 +1,21 @@
+.Note {
+  border: 2px solid black;
+  margin-bottom: 5px;
+  padding: 0 20px;
+  position: relative;
+}
+
+.note-link {
+  text-decoration: none;
+  color: black;
+}
+
+.btn-delete-note {
+  position: absolute;
+  right: 5%;
+  bottom: 5px;
+}
+
+h2 {
+  margin-top: 10px;
+}

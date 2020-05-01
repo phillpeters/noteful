@@ -1,26 +1,80 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Link, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import Sidebar from './Sidebar/Sidebar';
+import Main from './Main/Main';
+import STORE from './store';
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      store: STORE
+    };
+  }
+
+  render() {
+    const { store } = this.state;
+    return (
+      <div className='App'>
+        <header>
+          <Link className='header-link' to={'/'}><h1>Noteful</h1></Link>
+        </header>
+        <Route
+          exact
+          path='/'
+          render={() => 
+            <>
+              <Sidebar
+                folders={store.folders}
+              />
+              <Main
+                notes={store.notes} 
+              />
+            </>
+          }
+        />
+        <Route
+          path='/folder/:folderId'
+          render={(routeProps) =>
+            <>
+              <Sidebar
+                folders={store.folders}
+              />
+              <Main
+                notes={store.notes.filter(note => 
+                  note.folderId === routeProps.match.params.folderId
+                )}
+              />
+            </>
+          }
+        />
+        <Route
+          path='/note/:noteId'
+          render={(routeProps) => {
+            const note = store.notes.find(note => note.id === routeProps.match.params.noteId);
+            const folder = store.folders.filter(folder => folder.id === note.folderId);
+            return (
+              <>
+                <Sidebar
+                  folders={folder}
+                  goBack={() => routeProps.history.goBack()}
+                />
+                <Main
+                  {...routeProps}
+                  notes={store.notes.filter(note =>
+                    note.id === routeProps.match.params.noteId
+                  )}
+                />
+              </>
+            )
+          }}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
