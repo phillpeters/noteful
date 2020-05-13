@@ -1,35 +1,39 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
 import NotesContext from '../NotesContext';
 
 import './Note.css'
 
-function deleteNote(noteId, callback) {
-  fetch(`http://localhost:9090/notes/${noteId}`, {
-    method: 'DELETE',
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
-    .then(res => {
-      if (!res.ok) {
-        return res.json().then(error => {
-          throw error;
-        });
-      }
-      return res.json()
-    })
-    .then(data => {
-      callback(noteId);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
+
 
 class Note extends React.Component {
   static contextType = NotesContext;
+
+  deleteNote = (noteId, callback) => {
+    fetch(`http://localhost:9090/notes/${noteId}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(error => {
+            throw error;
+          });
+        }
+        return res.json()
+      })
+      .then(data => {
+        callback(noteId);
+        this.props.history.push('/');
+        
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 
   render() {
     const { details } = this.props;
@@ -44,7 +48,7 @@ class Note extends React.Component {
         <button
           className='btn btn-delete-note'
           onClick={() => {
-            deleteNote(details.id, this.context.deleteNote)
+            this.deleteNote(details.id, this.context.deleteNote)
           }}
         >Delete Note</button>
       </div>
@@ -52,4 +56,4 @@ class Note extends React.Component {
   }
 }
 
-export default Note;
+export default withRouter(Note);
