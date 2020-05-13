@@ -8,6 +8,20 @@
   flex: 1 100%;
 }
 
+.Main {
+  flex: 0.7;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.Sidebar {
+  flex: 0.3;
+  border-width: 2px 0 2px 2px;
+  border-color: black;
+  border-style: solid;
+  padding: 10px;
+}
+
 .btn {
   background: transparent;
   border: 2px solid black;
