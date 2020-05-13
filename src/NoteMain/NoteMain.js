@@ -11,7 +11,6 @@ class NoteMain extends React.Component {
       <>
         <Note key={note.id} details={note} />
         <p>{note.content}</p>
-        
       </>
     );
   }

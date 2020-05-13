@@ -22,6 +22,7 @@ class App extends React.Component {
     this.setState({
       notes: newNotes
     });
+    
   }
 
   componentDidMount() {
@@ -69,7 +70,7 @@ class App extends React.Component {
   render() {
     const contextValue = {
       notes: this.state.notes,
-      folder: this.state.folders,
+      folders: this.state.folders,
       deleteNote: this.deleteNote
     };
     

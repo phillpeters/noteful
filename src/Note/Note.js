@@ -6,7 +6,7 @@ import NotesContext from '../NotesContext';
 import './Note.css'
 
 function deleteNote(noteId, callback) {
-  fetch(`http://localhost:9000/notes/${noteId}`, {
+  fetch(`http://localhost:9090/notes/${noteId}`, {
     method: 'DELETE',
     headers: {
       'content-type': 'application/json'
