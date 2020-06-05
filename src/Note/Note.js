@@ -48,7 +48,9 @@ class Note extends React.Component {
           onClick={() => {
             this.deleteNote(details.id, this.context.deleteNote)
           }}
-        >Delete Note</button>
+        >
+          Delete Note
+        </button>
       </div>
     );
   }

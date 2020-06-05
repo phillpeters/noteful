@@ -5,6 +5,7 @@ import Note from '../Note/Note';
 
 class NoteMain extends React.Component {
   static contextType = NotesContext;
+  
   render() {
     const note = this.context.notes.find(note => note.id === this.props.match.params.noteId);
     return (

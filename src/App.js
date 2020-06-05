@@ -24,6 +24,12 @@ class App extends React.Component {
     });
   }
 
+  addFolder = folder => {
+    this.setState({
+      folders: [...this.state.folders, folder]
+    });
+  }
+
   componentDidMount() {
     fetch('http://localhost:9090/folders', {
       method: 'GET',
@@ -70,7 +76,8 @@ class App extends React.Component {
     const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
-      deleteNote: this.deleteNote
+      deleteNote: this.deleteNote,
+      addFolder: this.addFolder
     };
     
     return (

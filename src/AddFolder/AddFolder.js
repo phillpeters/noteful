@@ -1,20 +1,16 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import NotesContext from '../NotesContext';
 import './AddFolder.css';
 
 class AddFolder extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      folderName: ''
-    };
-  }
+  static contextType = NotesContext;
 
-  updateFolderName(name) {
-    this.setState({ folderName: name });
-  }
-  
-  submitForm(event) {
+  state = {
+    folderName: ''
+  };
+
+  submitForm = (event, callback) => {
     event.preventDefault();
 
     const { folderName } = this.state;
@@ -35,20 +31,21 @@ class AddFolder extends React.Component {
         return res.json();
       })
       .then(data => {
-        this.props.cancelAddFolder();
+        callback(data);
         this.props.history.push(`/folder/${data.id}`);
-        // this.setState({
-        //   folders: data
-        // });
+        this.props.cancelAddFolder();
       });
+  }
 
+  updateFolderName(name) {
+    this.setState({ folderName: name });
   }
   
   render() {
     return (
       <>
-        <div className='Folder add-folder-form active'>
-          <form id='form' className='add-folder' onSubmit={e => this.submitForm(e)}>
+        <div className='Folder add-folder-form'>
+          <form id='form' className='add-folder' onSubmit={e => this.submitForm(e, this.context.addFolder)}>
             <input
               type='text'
               placeholder='Folder Name'
