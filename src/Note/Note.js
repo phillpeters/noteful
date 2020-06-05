@@ -27,8 +27,6 @@ class Note extends React.Component {
       })
       .then(data => {
         callback(noteId);
-        this.props.history.push('/');
-        
       })
       .catch(error => {
         console.error(error);

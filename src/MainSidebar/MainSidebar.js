@@ -18,10 +18,9 @@ class MainSidebar extends React.Component {
   }
 
   cancelAddFolder() {
-    // this.setState({
-    //   addFolder: false
-    // });
-    console.log('setting addFolder to false');
+    this.setState({
+      addFolder: false
+    });
   }
 
   render() {
@@ -38,7 +37,7 @@ class MainSidebar extends React.Component {
         {folderList}
         {(!this.state.addFolder)
           ? <button onClick={() => this.showAddFolderForm()} className='btn btn-add-folder'>Add Folder</button>
-          : <AddFolder cancelAddFolder={this.cancelAddFolder} />}
+          : <AddFolder cancelAddFolder={() => this.cancelAddFolder()} />}
       </>
     );
   }

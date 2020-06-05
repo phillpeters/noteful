@@ -1,0 +1,14 @@
+input[type="text"] {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 1em;
+  text-align: center;
+  border: none transparent;
+  outline: none;
+  background-color: transparent;
+}
+
+.btn-add-folder {
+  margin-right: 5px;
+}
