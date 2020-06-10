@@ -8,6 +8,10 @@ class NoteSidebar extends React.Component {
   
   render() {
     const note = this.context.notes.find(note => note.id === this.props.match.params.noteId);
+    if (!note) {
+      return null;
+    }
+    
     const folder = this.context.folders.find(folder => folder.id === note.folderId);
     return (
       <>

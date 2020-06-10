@@ -1,14 +1,29 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import NotesContext from '../NotesContext';
+import ValidationError from '../ValidationError';
 import './AddFolder.css';
 
 class AddFolder extends React.Component {
   static contextType = NotesContext;
 
   state = {
-    folderName: ''
+    folderName: {
+      value: '',
+      touched: false
+    }
   };
+
+  updateFolderName(name) {
+    this.setState({ folderName: {value: name, touched: true }});
+  }
+
+  validateFolderName() {
+    const name = this.state.folderName.value.trim();
+    if (name.length === 0) {
+      return 'Enter a folder name';
+    }
+  }
 
   submitForm = (event, callback) => {
     event.preventDefault();
@@ -20,7 +35,7 @@ class AddFolder extends React.Component {
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify({ name: folderName })
+      body: JSON.stringify({ name: folderName.value })
     })
       .then(res => {
         if (!res.ok) {
@@ -36,10 +51,6 @@ class AddFolder extends React.Component {
         this.props.cancelAddFolder();
       });
   }
-
-  updateFolderName(name) {
-    this.setState({ folderName: name });
-  }
   
   render() {
     return (
@@ -47,14 +58,28 @@ class AddFolder extends React.Component {
         <div className='Folder add-folder-form'>
           <form id='form' className='add-folder' onSubmit={e => this.submitForm(e, this.context.addFolder)}>
             <input
+              className='folder-name'
               type='text'
               placeholder='Folder Name'
               onChange={e => this.updateFolderName(e.target.value)}
               autoFocus
             />
           </form>
+          {/* <div className='add-folder-validation'>
+            
+          </div> */}
         </div>
-        <button type='submit' form='form' className='btn btn-add-folder'>Add Folder</button>
+        {this.state.folderName.touched && (
+          <ValidationError message={this.validateFolderName()} />
+        )}
+        <button
+          type='submit'
+          form='form'
+          className='btn btn-add-folder'
+          disabled={this.validateFolderName()}
+        >
+          Add Folder
+        </button>
         <button onClick={this.props.cancelAddFolder} className='btn btn-cancel'>Cancel</button>
       </>
     );

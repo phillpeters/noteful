@@ -8,6 +8,10 @@ class NoteMain extends React.Component {
   
   render() {
     const note = this.context.notes.find(note => note.id === this.props.match.params.noteId);
+    if (!note) {
+      return null;
+    }
+    
     return (
       <>
         <Note key={note.id} details={note} />

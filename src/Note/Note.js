@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import NotesContext from '../NotesContext';
 
 import './Note.css'
@@ -26,6 +27,7 @@ class Note extends React.Component {
         return res.json()
       })
       .then(data => {
+        this.props.history.goBack();
         callback(noteId);
       })
       .catch(error => {
@@ -55,5 +57,14 @@ class Note extends React.Component {
     );
   }
 }
+
+Note.propTypes = {
+  details: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    modified: PropTypes.instanceOf(Date).isRequired,
+    content: PropTypes.string
+  })
+};
 
 export default withRouter(Note);

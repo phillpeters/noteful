@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import NotesContext from './NotesContext';
+import ErrorBoundary from './ErrorBoundary';
 
 import './App.css';
 import MainSidebar from './MainSidebar/MainSidebar';
@@ -27,6 +28,12 @@ class App extends React.Component {
   addFolder = folder => {
     this.setState({
       folders: [...this.state.folders, folder]
+    });
+  }
+
+  addNote = note => {
+    this.setState({
+      notes: [...this.state.notes, note]
     });
   }
 
@@ -77,7 +84,8 @@ class App extends React.Component {
       notes: this.state.notes,
       folders: this.state.folders,
       deleteNote: this.deleteNote,
-      addFolder: this.addFolder
+      addFolder: this.addFolder,
+      addNote: this.addNote
     };
     
     return (
@@ -87,14 +95,18 @@ class App extends React.Component {
             <Link className='header-link' to={'/'}><h1>Noteful</h1></Link>
           </header>
           <nav className='Sidebar'>
-            <Route exact path='/' component={MainSidebar} />
-            <Route path='/folder/:folderId' component={MainSidebar} />
-            <Route path='/note/:noteId' component={NoteSidebar} />
+            <ErrorBoundary>
+              <Route exact path='/' component={MainSidebar} />
+              <Route path='/folder/:folderId' component={MainSidebar} />
+              <Route path='/note/:noteId' component={NoteSidebar} />
+            </ErrorBoundary>
           </nav>
           <main className='Main'>
-            <Route exact path='/' component={MainMain} />
-            <Route path='/folder/:folderId' component={MainMain} />
-            <Route path='/note/:noteId' component={NoteMain} />
+            <ErrorBoundary>
+              <Route exact path='/' component={MainMain} />
+              <Route path='/folder/:folderId' component={MainMain} />
+              <Route path='/note/:noteId' component={NoteMain} />
+            </ErrorBoundary>
           </main>
         </div>
       </NotesContext.Provider>
