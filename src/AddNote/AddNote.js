@@ -94,25 +94,14 @@ class AddNote extends React.Component {
     });
   }
 
-  UNSAFE_componentWillMount() {
-    const currentFolder = this.context.folders
-      .find(folder => folder.id === this.props.match.params.folderId);
-
-    if (currentFolder) {
-      this.setState({
-        folder: {
-          value: currentFolder.name
-        },
-        folderId: currentFolder.id
-      });
-    }
-  }
-
   render() {
     const selectOptions = this.context.folders
       .map((folder, index) => (
         <option key={index} value={folder.name}>{folder.name}</option>
       ));
+
+    const currentFolder = this.context.folders
+      .find(folder => folder.id === this.props.defaultFolder).name;
     
     return (
       <>
@@ -143,7 +132,7 @@ class AddNote extends React.Component {
             <div className='form-group'>
               <label htmlFor='folder'>Folder</label>
               <select
-                defaultValue={this.state.folder.value}
+                defaultValue={currentFolder}
                 name='folder' id='folder'
                 onChange={e => this.updateFolder(e.target.value)}
               >

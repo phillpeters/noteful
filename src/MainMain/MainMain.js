@@ -44,7 +44,10 @@ class MainMain extends React.Component {
               {noteList}
               <button className='btn btn-add-note' onClick={() => this.showAddNoteForm()}>Add Note</button>
             </>
-          : <AddNote cancelAddNote={() => this.cancelAddNote()} />}
+          : <AddNote
+              cancelAddNote={() => this.cancelAddNote()}
+              defaultFolder={this.props.match.params.folderId}
+            />}
       </>
     );
   }
