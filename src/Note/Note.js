@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import NotesContext from '../NotesContext';
+import config from '../config';
 
 import './Note.css'
 
@@ -12,7 +13,7 @@ class Note extends React.Component {
   static contextType = NotesContext;
 
   deleteNote = (noteId, callback) => {
-    fetch(`http://localhost:8000/api/notes/${noteId}`, {
+    fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'

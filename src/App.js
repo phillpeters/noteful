@@ -9,6 +9,7 @@ import MainMain from './MainMain/MainMain';
 import NoteSidebar from './NoteSidebar/NoteSidebar';
 import NoteMain from './NoteMain/NoteMain';
 import STORE from './store';
+import config from './config';
 
 class App extends React.Component {
   state = {
@@ -38,7 +39,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8000/api/folders', {
+    fetch(`${config.API_ENDPOINT}/api/folders`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
@@ -58,7 +59,7 @@ class App extends React.Component {
         })
       });
 
-    fetch('http://localhost:8000/api/notes', {
+    fetch(`${config.API_ENDPOINT}/api/notes`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json'

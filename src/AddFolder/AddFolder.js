@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import NotesContext from '../NotesContext';
 import ValidationError from '../ValidationError';
+import config from '../config';
 import './AddFolder.css';
 
 class AddFolder extends React.Component {
@@ -30,7 +31,7 @@ class AddFolder extends React.Component {
 
     const { folderName } = this.state;
 
-    fetch('http://localhost:8000/api/folders', {
+    fetch(`${config.API_ENDPOINT}/api/folders`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json'

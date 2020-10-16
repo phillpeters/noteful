@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import NotesContext from '../NotesContext';
 import ValidationError from '../ValidationError';
+import config from '../config';
 
 class AddNote extends React.Component {
   constructor(props) {
@@ -70,7 +71,7 @@ class AddNote extends React.Component {
 
     const { title, note, folderid } = this.state;
 
-    fetch('http://localhost:8000/api/notes', {
+    fetch(`${config.API_ENDPOINT}/api/notes`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
