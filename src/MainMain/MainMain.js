@@ -25,17 +25,21 @@ class MainMain extends React.Component {
 
   render() {
     let notes = [];
-    if (!this.props.match.params.folderId) {
+    if (!this.props.match.params.folderid) {
       notes = this.context.notes;
     } else {
       notes = this.context.notes.filter(note =>
-        note.folderId === this.props.match.params.folderId
+        note.folderid === Number(this.props.match.params.folderid)
       )
     }
 
     const noteList = notes.map(note => (
       <Note key={note.id} details={note} />
     ));
+
+    const currentFolder = this.context.folders
+      .filter(folder => folder.id === Number(this.props.match.params.folderid))
+      .map(folder => folder.name)[0];
 
     return (
       <>
@@ -46,7 +50,7 @@ class MainMain extends React.Component {
             </>
           : <AddNote
               cancelAddNote={() => this.cancelAddNote()}
-              defaultFolder={this.props.match.params.folderId}
+              currentFolder={currentFolder || ''}
             />}
       </>
     );

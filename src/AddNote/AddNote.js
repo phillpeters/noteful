@@ -15,10 +15,10 @@ class AddNote extends React.Component {
       },
       note: '',
       folder: {
-        value: '',
+        value: this.props.currentFolder,
         touched: false
       },
-      folderId: ''
+      folderid: Number(this.props.match.params.folderid)
     };
   }
 
@@ -44,7 +44,10 @@ class AddNote extends React.Component {
       folder: {
         value: folder,
         touched: true
-      }
+      },
+      folderid: this.context.folders
+                  .filter(item => item.name === folder)
+                  .map(item => item.id)[0]
     });
   }
 
@@ -65,9 +68,9 @@ class AddNote extends React.Component {
   submitForm(event, callback) {
     event.preventDefault();
 
-    const { title, note, folderId } = this.state;
+    const { title, note, folderid } = this.state;
 
-    fetch('http://localhost:9090/notes', {
+    fetch('http://localhost:8000/api/notes', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -75,7 +78,7 @@ class AddNote extends React.Component {
       body: JSON.stringify({ 
         name: title.value,
         content: note,
-        folderId: folderId,
+        folderid: Number(folderid),
         modified: moment().format()
       })
     })
@@ -89,7 +92,7 @@ class AddNote extends React.Component {
     })
     .then(data => {
       callback(data);
-      this.props.history.push(`/folder/${data.folderId}`);
+      this.props.history.push(`/folder/${data.folderid}`);
       this.props.cancelAddNote();
     });
   }
@@ -99,9 +102,6 @@ class AddNote extends React.Component {
       .map((folder, index) => (
         <option key={index} value={folder.name}>{folder.name}</option>
       ));
-
-    const currentFolder = this.context.folders
-      .find(folder => folder.id === this.props.defaultFolder).name;
     
     return (
       <>
@@ -132,7 +132,7 @@ class AddNote extends React.Component {
             <div className='form-group'>
               <label htmlFor='folder'>Folder</label>
               <select
-                defaultValue={currentFolder}
+                defaultValue={this.state.folder.value}
                 name='folder' id='folder'
                 onChange={e => this.updateFolder(e.target.value)}
               >

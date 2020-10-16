@@ -38,7 +38,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:9090/folders', {
+    fetch('http://localhost:8000/api/folders', {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
@@ -58,7 +58,7 @@ class App extends React.Component {
         })
       });
 
-    fetch('http://localhost:9090/notes', {
+    fetch('http://localhost:8000/api/notes', {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
@@ -75,7 +75,7 @@ class App extends React.Component {
       .then(data => {
         this.setState({
           notes: data
-        })
+        });
       });
   }
 
@@ -97,14 +97,14 @@ class App extends React.Component {
           <nav className='Sidebar'>
             <ErrorBoundary>
               <Route exact path='/' component={MainSidebar} />
-              <Route path='/folder/:folderId' component={MainSidebar} />
+              <Route path='/folder/:folderid' component={MainSidebar} />
               <Route path='/note/:noteId' component={NoteSidebar} />
             </ErrorBoundary>
           </nav>
           <main className='Main'>
             <ErrorBoundary>
               <Route exact path='/' component={MainMain} />
-              <Route path='/folder/:folderId' component={MainMain} />
+              <Route path='/folder/:folderid' component={MainMain} />
               <Route path='/note/:noteId' component={NoteMain} />
             </ErrorBoundary>
           </main>

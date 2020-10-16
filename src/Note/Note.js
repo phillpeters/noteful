@@ -12,7 +12,7 @@ class Note extends React.Component {
   static contextType = NotesContext;
 
   deleteNote = (noteId, callback) => {
-    fetch(`http://localhost:9090/notes/${noteId}`, {
+    fetch(`http://localhost:8000/api/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'
@@ -24,10 +24,10 @@ class Note extends React.Component {
             throw error;
           });
         }
-        return res.json()
+        return res;
       })
       .then(data => {
-        this.props.history.goBack();
+        this.props.history.push(this.props.match.url);
         callback(noteId);
       })
       .catch(error => {
@@ -60,9 +60,9 @@ class Note extends React.Component {
 
 Note.propTypes = {
   details: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    modified: PropTypes.instanceOf(Date).isRequired,
+    // modified: PropTypes.instanceOf(Date).isRequired,
     content: PropTypes.string
   })
 };

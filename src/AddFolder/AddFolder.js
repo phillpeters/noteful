@@ -30,7 +30,7 @@ class AddFolder extends React.Component {
 
     const { folderName } = this.state;
 
-    fetch('http://localhost:9090/folders', {
+    fetch('http://localhost:8000/api/folders', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
